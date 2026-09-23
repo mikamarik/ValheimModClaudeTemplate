@@ -1,0 +1,21 @@
+<Project>
+
+  <!--
+    Finds the local Valheim install. Override by exporting VALHEIM_INSTALL,
+    or by passing -p:ValheimInstall=... to dotnet build.
+    macOS keeps the game assemblies in valheim.app/Contents/Resources/Data/Managed,
+    Windows and Linux in valheim_Data/Managed.
+    Verified on macOS only. The Windows and Linux defaults are the usual Steam folders.
+  -->
+  <PropertyGroup>
+    <ValheimInstall Condition="'$(ValheimInstall)' == '' and '$(VALHEIM_INSTALL)' != ''">$(VALHEIM_INSTALL)</ValheimInstall>
+    <ValheimInstall Condition="'$(ValheimInstall)' == '' and $([MSBuild]::IsOSPlatform('OSX'))">$(HOME)/Library/Application Support/Steam/steamapps/common/Valheim</ValheimInstall>
+    <ValheimInstall Condition="'$(ValheimInstall)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">C:\Program Files (x86)\Steam\steamapps\common\Valheim</ValheimInstall>
+    <ValheimInstall Condition="'$(ValheimInstall)' == ''">$(HOME)/.local/share/Steam/steamapps/common/Valheim</ValheimInstall>
+
+    <ValheimManaged Condition="$([MSBuild]::IsOSPlatform('OSX'))">$(ValheimInstall)/valheim.app/Contents/Resources/Data/Managed</ValheimManaged>
+    <ValheimManaged Condition="'$(ValheimManaged)' == ''">$(ValheimInstall)/valheim_Data/Managed</ValheimManaged>
+    <BepInExDir>$(ValheimInstall)/BepInEx</BepInExDir>
+  </PropertyGroup>
+
+</Project>

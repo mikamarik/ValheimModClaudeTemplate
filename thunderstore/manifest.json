@@ -1,0 +1,9 @@
+{
+  "name": "MyValheimMod",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/YourName/MyValheimMod",
+  "description": "One or two sentences a player reads on Thunderstore. 250 characters at most.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2350"
+  ]
+}
